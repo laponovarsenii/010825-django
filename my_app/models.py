@@ -86,6 +86,14 @@ class Book(models.Model):  # table name like <app_name>_<model_name>
         null=True,  #  сторона базы данных
         blank=True  #  сторона админ панели
     )
+    discounted_price: Decimal = models.DecimalField(  # 123.45
+        verbose_name="Цена книги со скидкой",
+        help_text="Цена книги в евро. Должно быть больше 0",
+        max_digits=5,
+        decimal_places=2,
+        null=True,  #  сторона базы данных
+        blank=True  #  сторона админ панели
+    )
     category: str = models.CharField(
         verbose_name="Категория книги",
         help_text="Категория книги из списка предложенных. Если неизвестна, выберите 'N/A'",
@@ -95,6 +103,7 @@ class Book(models.Model):  # table name like <app_name>_<model_name>
         # editable=False
     )
     # isbn: str = models.SlugField()
+    is_bestseller = models.BooleanField(default=False)
 
     def __str__(self):
         # return self.title
