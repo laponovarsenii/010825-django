@@ -33,8 +33,20 @@ class BooksSerializer(serializers.ModelSerializer):
         default=Decimal("0.0"),
         write_only=True
     )
-    category = CategoryNestedSerializer()
-    author = AuthorShortInfoSerializer()
+    # category = CategoryNestedSerializer()
+    # author = AuthorShortInfoSerializer()
+
+    # category = serializers.PrimaryKeyRelatedField(
+    #     read_only=True,
+    #     queryset=,
+    #     pk_field=
+    # )
+    publisher = serializers.StringRelatedField()
+    author = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True,
+        # queryset=Author.objects.all(),
+    )
 
     class Meta:
         model = Book
@@ -46,7 +58,8 @@ class BooksSerializer(serializers.ModelSerializer):
             'discounted_price',
             'category',
             'is_bestseller',
-            'author'
+            'author',
+            'publisher'
         ]
 
 

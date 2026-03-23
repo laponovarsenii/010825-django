@@ -17,9 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from my_app.views import (
+from my_app.views.books import (
     list_create_books,
     retrieve_update_destroy_book,
+)
+
+from my_app.views.categories import (
+    CategoryListCreateAPIView,
+    CategoryRetrieveUpdateDestroyAPIView,
 )
 
 
@@ -27,4 +32,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('books/', list_create_books),
     path('books/<int:pk>', retrieve_update_destroy_book),
+    path('categories/', CategoryListCreateAPIView.as_view()),
+    path('categories/<int:pk>', CategoryRetrieveUpdateDestroyAPIView.as_view()),
 ]
