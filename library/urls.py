@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import DefaultRouter, SimpleRouter
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from my_app.views.authors import AuthorRetrieveUpdateDestroyGenericView, AuthorListGenericView, AuthorsViewSet
 from my_app.views.books import (
@@ -41,6 +43,13 @@ router.register('authors', AuthorsViewSet, 'authors')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('auth-token/', obtain_auth_token),
+
+    # JWT
+    path('jwt-login/', TokenObtainPairView.as_view()),
+    path('refresh-token/', TokenRefreshView.as_view()),
+
     # path('books/', list_create_books),
     # path('books/', BooksListAPIView.as_view()),
     path('books/', BooksListFiltersGenericView.as_view()),

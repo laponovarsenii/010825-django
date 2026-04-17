@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+
 from environ import Env
 
 env = Env()
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     # 3rd-party apps
     'rest_framework',
     'django_filters',
+    'rest_framework.authtoken',
 
     # local apps
     'my_app.apps.MyAppConfig',
@@ -152,6 +155,25 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 10,
 
     'DEFAULT_PAGINATION_CLASS': 'paginators.MyCustomCursorPagination',
+    'DEFAULT_AUTHENTICATION_CLASSES': (  # Кто мы такие?
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),   # NEW
+    'DEFAULT_PERMISSION_CLASSES': (  # Что мы можем делать?
+        'rest_framework.permissions.IsAuthenticated',
+    ),   # NEW
+}
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),  # время жизни токена доступа (в миллисекундах)
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1), # время жизни токена обновления (в миллисекундах)
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
 }
 
 
