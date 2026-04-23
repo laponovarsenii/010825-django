@@ -33,7 +33,7 @@ class TestMiddleware:
         return response
 
 
-class JWTAuthMiddleware:
+class JWTMiddleware:
     # Эти маршруты исключаем из обработки полностью,
     # чтобы middleware не вмешивался в точки входа, где auth-логика должна жить отдельно.
     excluded_paths = {
